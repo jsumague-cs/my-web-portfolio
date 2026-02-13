@@ -36,44 +36,37 @@ def xchange_board(m):
         return False
     if m == 'a1':
         a1 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'a2':
+    elif m == 'a2':
         a2 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'a3':
+    elif m == 'a3':
         a3 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'b1':
+    elif m == 'b1':
         b1 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'b2':
+    elif m == 'b2':
         b2 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'b3':
+    elif m == 'b3':
         b3 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'c1':
+    elif m == 'c1':
         c1 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'c2':
+    elif m == 'c2':
         c2 = 'x'
-        xturn = False
         marked_list.append(m)
-    if m == 'c3':
+    elif m == 'c3':
         c3 = 'x'
-        xturn = False
         marked_list.append(m)
-    if xturn == False:
-        oturn = True
     else:
-         print('invalid')
+        print('Invalid move')
+        return False
+    xturn = False
+    oturn = True
+    return True
 
 
 
@@ -85,45 +78,38 @@ def ochange_board(m):
         print('Position taken')
         return False
     if m == 'a1':
-            a1 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'a2':
-            a2 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'a3':
-            a3 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'b1':
-            b1 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'b2':
-            b2 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'b3':
-            b3 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'c1':
-            c1 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'c2':
-            c2 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if m == 'c3':
-            c3 = 'o'
-            oturn = False
-            marked_list.append(m)
-    if oturn == False:
-        xturn = True
+        a1 = 'o'
+        marked_list.append(m)
+    elif m == 'a2':
+        a2 = 'o'
+        marked_list.append(m)
+    elif m == 'a3':
+        a3 = 'o'
+        marked_list.append(m)
+    elif m == 'b1':
+        b1 = 'o'
+        marked_list.append(m)
+    elif m == 'b2':
+        b2 = 'o'
+        marked_list.append(m)
+    elif m == 'b3':
+        b3 = 'o'
+        marked_list.append(m)
+    elif m == 'c1':
+        c1 = 'o'
+        marked_list.append(m)
+    elif m == 'c2':
+        c2 = 'o'
+        marked_list.append(m)
+    elif m == 'c3':
+        c3 = 'o'
+        marked_list.append(m)
     else:
-         print('invalid')
+        print('Invalid move')
+        return False
+    oturn = False
+    xturn = True
+    return True
 
 board = f'a |{a1}|{a2}|{a3}|\nb |{b1}|{b2}|{b3}|\nc |{c1}|{c2}|{c3}|\n   1 2 3'
 
@@ -153,31 +139,38 @@ while game_end == False:
     while xturn == True and not game_end:
         print(board)
         m = input('X turn: ')
-        xchange_board(m)
-        print(board)
-        winner = check_winner()
-        if winner:
-            print(f'{winner} wins!')
-            game_end = True
-            break
+        if xchange_board(m):
+            print(board)
+            winner = check_winner()
+            if winner:
+                print(f'{winner} wins!')
+                game_end = True
+                break
+            # check for draw
+            if len(marked_list) >= 9:
+                print('Draw!')
+                game_end = True
+                break
+            break  # valid move made, exit to O's turn
 
     if game_end:
         break
 
-    m = input('O turn: ')
-    ochange_board(m)
-    print(board)
-    winner = check_winner()
-
-    if winner:
-        print(f'{winner} wins!')
-        game_end = True
-        break
-
-    # check for draw
-    if len(marked_list) >= 9:
-        print('Draw!')
-        game_end = True
+    while oturn == True and not game_end:
+        m = input('O turn: ')
+        if ochange_board(m):
+            print(board)
+            winner = check_winner()
+            if winner:
+                print(f'{winner} wins!')
+                game_end = True
+                break
+            # check for draw
+            if len(marked_list) >= 9:
+                print('Draw!')
+                game_end = True
+                break
+            break  # valid move made, exit to X's turn
 
 
 # print x at o turns
